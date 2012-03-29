@@ -69,8 +69,6 @@ Then if you decide to add _hungry_ then you change states to
    wolf.characteristics #=> 5   
 ```
 
-Now you can create configuration for Wolf instance with configuration.
-
 
 ## Copyright
 
