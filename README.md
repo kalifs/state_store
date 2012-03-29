@@ -23,7 +23,7 @@ It is possible to configure behaviour for #has_states
 * **:as** allow to change method for states (default is :states). This is useful if you have more than one state attribute per class.
 
 
-== Copyright
+## Copyright
 
 Copyright (c) 2012 Arturs Meisters. See LICENSE.txt for
 further details.
