@@ -4,6 +4,8 @@
 
 `gem install state_store`
 
+`require 'state_store'`
+
 For Bundler add this in you Gemfile
 
 `gem state_store, '~>0.0.2'`
