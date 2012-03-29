@@ -54,7 +54,7 @@ When you need to add new states and you keep want to previous states configurati
 
 ```
 
-Then if you decide to add _hungry_ then you change states to
+Then if you decide to add _hungry_ then you change states as shown below and that will keep previous configuration valid as well as new one.
 
 ```ruby
    class Wold
