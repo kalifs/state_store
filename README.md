@@ -59,12 +59,12 @@ When you need to add new states and you keep want to previous states configurati
 Then if you decide to add _hungry_ then you change states as shown below and that will keep previous configuration valid as well as new one.
 
 ```ruby
-   class Wold
+   class Wolf
       include StateStore
       has_states :hungry, :big, :bad, :in => :characteristics, :as => :nature
    end
 
-   wolf = Wold.new()
+   wolf = Wolf.new()
    wolf.nature = [:bad]
    wolf.characteristics #=> 1
    wold.nature = [:hungry,:bad]
