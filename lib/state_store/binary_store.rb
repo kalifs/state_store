@@ -14,6 +14,11 @@ module StateStore
       value_to_statuses(value)
     end
 
+    def value(humanized_array) 
+      raise ArgumentError.new("Out of range") if self.states < humanized_array.size
+      statuses_to_values(humanized_array)
+    end
+
     def has_status?(symbol,value) 
       human_array = humanize(value)
       human_array.include?(symbol)
@@ -21,6 +26,10 @@ module StateStore
 
     def index(index,state)
       statuses[index] if state.to_s == "1"
+    end
+
+    def index_by_state(state)
+      statuses[state]
     end
 
     private
@@ -33,6 +42,12 @@ module StateStore
         end
       end
       result
+    end
+
+    def statuses_to_values(statuses_array)
+      self.statuses.map do |status|
+        statuses_array.include?(status) ? "1" : "0"
+      end.join("").to_i(2)
     end
 
     def normalized_array(array)

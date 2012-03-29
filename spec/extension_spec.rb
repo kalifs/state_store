@@ -14,26 +14,26 @@ describe StateStore::Extension do
       klass.send(:include,StateStore)
     end
 
-    it "should raise error when no statuses is given" do 
+    it "should raise error when no states is given" do 
       expect{
-        klass.has_statuses()
-      }.to raise_error(ArgumentError,"No statuses given")
+        klass.has_states()
+      }.to raise_error(ArgumentError,"No states given")
     end
 
     it "should raise error when no :in key is given" do 
       expect{
-        klass.has_statuses :read,:write
+        klass.has_states :read,:write
       }.to raise_error(ArgumentError,":in is required")
     end
 
     it "should create store with given statuses" do 
-      klass.has_statuses :read,:write, :in => :status
-      klass.state_store_store.statuses.should eq([:read,:write])
+      klass.has_states :read,:write, :in => :status
+      klass.states_stores[:states].statuses.should eq([:read,:write])
     end
 
     it "should store given options in #state_store_options" do 
-      klass.has_statuses :read,:write, :in => :status 
-      klass.state_store_options.should eq({:in => :status})
+      klass.has_states :read,:write, :in => :status 
+      klass.states_stores_options[:states].should eq({:in => :status, :as => :states})
     end
   end
 
@@ -42,14 +42,14 @@ describe StateStore::Extension do
     before(:each){
       klass.class_eval do 
         def status_name
-          5
+          @status_name || 5
         end
       end
       klass.send(:include,StateStore)
     }
 
     it "should call store #has_status? when #has_status_name? is called on klass instance" do 
-      klass.has_statuses :read,:write,:execute, :in => :status_name
+      klass.has_states :read,:write,:execute, :in => :status_name
       klass.any_instance.stub(:status_name).and_return(5)
       
       object.has_status_name?(:read).should be_true
@@ -57,12 +57,19 @@ describe StateStore::Extension do
     end
 
     it "should call store #humanize when [status_name] is called on instance of class" do 
-      klass.has_statuses :read,:write,:execute, :in => :status_name
-      object.status_name.should eq([:read,:execute])
+      klass.has_states :read,:write,:execute, :in => :status_name
+      object.states.should eq([:read,:execute])
     end 
 
-    it "should call super if base class not respond to method" do 
-
+    it "should assign value from array to status method" do 
+      klass.has_states :read, :write, :execute, :in => :status_name
+      klass.class_eval do 
+        def status_name=(value)
+          @status_name = value
+        end
+      end
+      object.states= [:read,:write]
+      object.status_name.should eq(6)
     end
   end
 

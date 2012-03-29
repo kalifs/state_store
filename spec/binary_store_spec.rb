@@ -66,4 +66,16 @@ describe StateStore::BinaryStore do
     store.index(1,"1").should eq(:two)
     store.index(1,"0").should be_nil
   end
+
+  it "should return value from statuses array" do 
+    store = klass.new([:read,:write,:execute])
+    store.value([]).should eq(0)
+    store.value([:execute]).should eq(1)
+    store.value([:write]).should eq(2)
+    store.value([:write,:execute]).should eq(3)
+    store.value([:read]).should eq(4)
+    store.value([:read,:execute]).should eq(5)
+    store.value([:read,:write]).should eq(6)
+    store.value([:read,:write,:execute]).should eq(7)
+  end
 end
