@@ -26,6 +26,27 @@ describe StateStore::Extension do
       }.to raise_error(ArgumentError,":in is required")
     end
 
+    it "should create scope in class for each state store by default with name :states" do 
+      klass.has_states :read,:write, :in => :status
+      klass.states_stores.keys.should eq([:states])
+      klass.has_states :green,:round, :in => :other_status, :as => :properties
+      klass.states_stores.keys.sort.should eq([:properties,:states])
+    end
+
+    it "should validate if there is scope with same name" do 
+      klass.has_states :read,:write, :in => :status
+      expect{
+        klass.has_states :green, :round, :in => :other_status
+      }.to raise_error(ArgumentError, "Scope 'states' already exists")
+    end   
+
+    it "should validate if there is scope with same storage attribute" do 
+      klass.has_states :read,:write, :in => :status
+      expect{
+        klass.has_states :green, :round, :in => :status, :as => :properties
+      }.to raise_error(ArgumentError, "Scope 'states' already store configuration in 'status'")
+    end
+
     it "should create store with given statuses" do 
       klass.has_states :read,:write, :in => :status
       klass.states_stores[:states].statuses.should eq([:read,:write])

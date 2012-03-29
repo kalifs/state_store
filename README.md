@@ -47,12 +47,12 @@ When you need to add new states and you keep want to previous states configurati
 ```ruby 
    class Wolf
       include StateStore
-      has_states :big,:bad, :in => :characteristics, :as => :nature
+      has_states :big,:bad, :in => :characteristic, :as => :nature
    end
 
    wolf = Wold.new()
    wolf.nature = [:bad]
-   wolf.characteristics #=> 1
+   wolf.characteristic #=> 1
 
 ```
 
@@ -61,14 +61,16 @@ Then if you decide to add _hungry_ then you change states as shown below and tha
 ```ruby
    class Wolf
       include StateStore
-      has_states :hungry, :big, :bad, :in => :characteristics, :as => :nature
+      has_states :hungry, :big, :bad, :in => :characteristic, :as => :nature
    end
 
    wolf = Wolf.new()
    wolf.nature = [:bad]
-   wolf.characteristics #=> 1
-   wold.nature = [:hungry,:bad]
-   wolf.characteristics #=> 5   
+   wolf.characteristic #=> 1
+   wolf.nature = [:hungry,:bad]
+   wolf.nature << :bad
+   wolf.has_charasteristic?(:bad) #=> true
+   wolf.characteristic #=> 5   
 ```
 
 

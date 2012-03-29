@@ -4,19 +4,20 @@ module StateStore
     module ClassMethods
 
       def has_states *states
-        state_store_options = states && states.last.is_a?(Hash) && states.pop || {}
+        states_stores_options = states && states.last.is_a?(Hash) && states.pop || {}
         raise ArgumentError.new("No states given") if states.empty? 
-        raise ArgumentError.new(":in is required") unless state_store_options[:in]
+        raise ArgumentError.new(":in is required") unless states_stores_options[:in]
 
-        state_store_options[:as] ||= :states
+        states_stores_options[:as] ||= :states
         store = StateStore::BinaryStore.new(states)
 
         @states_stores ||={}
         @states_stores_options ||={}
+        validate_state_store(states_stores_options)
 
-        @states_stores[state_store_options[:as]] = store
-        @states_stores_options[state_store_options[:as]] = state_store_options
-        create_methods_for_state_store(state_store_options[:as])
+        @states_stores[states_stores_options[:as]] = store
+        @states_stores_options[states_stores_options[:as]] = states_stores_options
+        create_methods_for_state_store(states_stores_options[:as])
       end 
 
       def states_stores
@@ -28,6 +29,15 @@ module StateStore
       end
 
       private
+
+      def validate_state_store(options)
+        raise ArgumentError.new("Scope '#{options[:as]}' already exists") if states_stores_options.keys.include?(options[:as])
+        states_stores_options.each do |scope,conf_options|
+          if conf_options[:in].to_sym == options[:in].to_sym
+            raise ArgumentError.new("Scope '#{scope}' already store configuration in '#{conf_options[:in]}'")
+          end
+        end
+      end
 
       def create_methods_for_state_store(name)
 
@@ -41,6 +51,7 @@ module StateStore
           define_method :"#{name}=" do |humanized_array|
             method_name = self.class.states_stores_options[name][:in]
             store = self.class.states_stores[name]
+            humanized_array = [humanized_array] unless humanized_array.is_a?(Array)
             self.send(:"#{method_name}=",store.value(humanized_array))
           end
         end
