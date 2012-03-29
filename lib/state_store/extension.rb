@@ -42,10 +42,13 @@ module StateStore
       def create_methods_for_state_store(name)
 
         self.class_eval do 
+
           define_method name do 
             method_name = self.class.states_stores_options[name][:in]
             value = self.send(method_name)
-            self.class.states_stores[name].humanize(value)
+            humanized_array = self.class.states_stores[name].humanize(value)
+            humanized_array.add_observer(self,:__state_store_humanized_array_updated__)
+            humanized_array
           end
 
           define_method :"#{name}=" do |humanized_array|
@@ -53,6 +56,11 @@ module StateStore
             store = self.class.states_stores[name]
             humanized_array = [humanized_array] unless humanized_array.is_a?(Array)
             self.send(:"#{method_name}=",store.value(humanized_array))
+            humanized_array
+          end
+
+          define_method :__state_store_humanized_array_updated__ do |humanized_array|
+            self.send(:"#{name}=",humanized_array)
           end
         end
 

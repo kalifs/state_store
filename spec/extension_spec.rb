@@ -92,6 +92,27 @@ describe StateStore::Extension do
       object.states= [:read,:write]
       object.status_name.should eq(6)
     end
+ 
+    context "observation" do 
+      before(:each) do 
+        klass.class_eval do 
+          def status_name=(value)
+            @status_name = value
+          end
+        end
+        klass.has_states :read,:write,:execute, :in => :status_name
+      end
+
+      it "should change storage attribute when state is added to states array" do 
+        object.states.add(:write)
+        object.status_name.should eq(7)
+      end
+
+      it "should change storage attribute when state is removed from states array" do 
+        object.states.remove(:read)
+        object.status_name.should eq(1)
+      end
+    end
   end
 
 end

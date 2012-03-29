@@ -73,6 +73,28 @@ Then if you decide to add _hungry_ then you change states as shown below and tha
    wolf.characteristic #=> 5   
 ```
 
+### Changing states
+
+It is possible to alter states Array and changes storage attribute will be updated automaticly.
+
+```ruby
+   class Apple
+     attr_accessor :status
+     include StateStore
+     has_states :big, :red, :"with-worm", :in => :status
+   end
+
+   apple = Apple.new
+   apple.states = [:big,:red]
+   apple.status #=> 6
+   apple.states.remove(:red)
+   apple.status #=> 4
+   apple.states.add(:"with-worm")
+   apple.status #=> 5
+```
+
+But remember if you will modify `states` with other methods, like '<<' or 'delete' or others changes will not be stored in status. 
+
 
 ## Copyright
 

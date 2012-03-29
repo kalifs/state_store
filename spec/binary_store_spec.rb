@@ -12,7 +12,7 @@ describe StateStore::BinaryStore do
     }.not_to raise_error
   end
 
-  it "it should raise error when statuses not Array" do 
+  it "should raise error when statuses not Array" do 
     expect{
       klass.new(Object.new)
     }.to raise_error(ArgumentError,"Only array is accepted.")
@@ -46,6 +46,23 @@ describe StateStore::BinaryStore do
     store.humanize(5).should eq([:read,:execute])
     store.humanize(6).should eq([:read,:write])
     store.humanize(7).should eq([:read,:write,:execute])
+  end
+
+  describe "humanized array observation" do 
+    let(:store){klass.new([:read,:write,:execute])}
+    it "should notify observers when element is added to array" do 
+      h_array = store.humanize(1)
+      h_array.should_receive(:changed)
+      h_array.should_receive(:notify_observers)
+      h_array.add(:write)
+    end
+
+    it "should notify observers when element is removed from array" do 
+      h_array = store.humanize(1)
+      h_array.should_receive(:changed)
+      h_array.should_receive(:notify_observers)
+      h_array.remove(:execute)
+    end
   end
 
   it "should raise error when given value is greated then store total positions" do 

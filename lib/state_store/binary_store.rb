@@ -1,3 +1,5 @@
+require 'observer'
+
 module StateStore
   class BinaryStore
     attr_reader :statuses, :states, :total_positions
@@ -11,14 +13,16 @@ module StateStore
 
     def humanize(value)
       raise ArgumentError.new("Out of range") if self.total_positions < value
-      value_to_statuses(value)
+      humanized_array = value_to_statuses(value)
+      humanized_array.extend(HumanizedArrayOperations)
+      humanized_array
     end
 
     def value(humanized_array) 
       raise ArgumentError.new("Out of range") if self.states < humanized_array.size
       statuses_to_values(humanized_array)
     end
-
+ 
     def has_status?(symbol,value) 
       human_array = humanize(value)
       human_array.include?(symbol)
@@ -56,6 +60,26 @@ module StateStore
 
     def value_to_binary_array(value)
       value.to_s(2).split("")
+    end
+
+    module HumanizedArrayOperations
+      include Observable
+
+      def add(*args)
+        changed
+        args.each do |value|
+          self << value
+        end
+        notify_observers(self)
+      end
+
+      def remove(*args)
+        changed
+        args.each do |value|
+          self.delete(value)
+        end
+        notify_observers(self)
+      end
     end
 
     class BinaryValue
