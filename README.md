@@ -1,5 +1,14 @@
 # State store
 
+## Installation
+
+`gem install state_store`
+
+For Rails add this in you Gemfile
+`gem state_store, '~>0.0.2'`
+And then run
+`bundle install`
+
 State store all to keep different states in one attribute.
 It provide module for mixin, it is pure ruby so it is possible to use it in any ruby class.
  
