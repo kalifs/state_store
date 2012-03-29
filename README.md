@@ -12,6 +12,8 @@ And then run
 
 `bundle install`
 
+## Usage
+
 State store all to keep different states in one attribute.
 It provide module for mixin, it is pure ruby so it is possible to use it in any ruby class.
  
