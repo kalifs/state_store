@@ -15,11 +15,11 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "state_store"
-  gem.homepage = "http://github.com/ithouse/state_store"
+  gem.homepage = "http://github.com/kalifs/state_store"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "arturs@ithouse.lv"
+  gem.summary = %Q{Convert numeric value to Array of states}
+  gem.description = %Q{Create numeric value to Array of states.}
+  gem.email = "arturs.meisters@gmail.com"
   gem.authors = ["Arturs Meisters"]
   # dependencies defined in Gemfile
 end
@@ -30,14 +30,6 @@ Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
   test.pattern = 'test/**/test_*.rb'
   test.verbose = true
-end
-
-require 'rcov/rcovtask'
-Rcov::RcovTask.new do |test|
-  test.libs << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
-  test.rcov_opts << '--exclude "gems/*"'
 end
 
 task :default => :test
