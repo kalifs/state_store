@@ -27,6 +27,8 @@ It provide module for mixin, it is pure ruby so it is possible to use it in any 
 
    file = MyFile.new
    file.states = [:read,:write]
+   file.has_permission?(:read) #=> true
+   file.has_permission?(:execute) #=> false
    file.permission #=> 5
    file.states #=> [:read,:write]
 ```
