@@ -4,7 +4,7 @@
 
 `gem install state_store`
 
-For Rails add this in you Gemfile
+For Bundler add this in you Gemfile
 
 `gem state_store, '~>0.0.2'`
 
