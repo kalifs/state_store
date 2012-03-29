@@ -31,7 +31,8 @@ Gem::Specification.new do |s|
     "spec/binary_store_spec.rb",
     "spec/binary_value_spec.rb",
     "spec/extension_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "state_store.gemspec"
   ]
   s.homepage = "http://github.com/kalifs/state_store"
   s.licenses = ["MIT"]
