@@ -5,8 +5,11 @@
 `gem install state_store`
 
 For Rails add this in you Gemfile
+
 `gem state_store, '~>0.0.2'`
+
 And then run
+
 `bundle install`
 
 State store all to keep different states in one attribute.
