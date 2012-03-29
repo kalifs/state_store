@@ -68,7 +68,6 @@ Then if you decide to add _hungry_ then you change states as shown below and tha
    wolf.nature = [:bad]
    wolf.characteristic #=> 1
    wolf.nature = [:hungry,:bad]
-   wolf.nature << :bad
    wolf.has_charasteristic?(:bad) #=> true
    wolf.characteristic #=> 5   
 ```
