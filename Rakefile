@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "state_store"
   gem.homepage = "http://github.com/kalifs/state_store"
   gem.license = "MIT"
-  gem.summary = %Q{Convert numeric value to Array of states}
-  gem.description = %Q{Create numeric value to Array of states.}
+  gem.summary = %Q{Store Array of states in single Integer.}
+  gem.description = %Q{It allows to store pre-defined set of states in one attribute as Integer}
   gem.email = "arturs.meisters@gmail.com"
   gem.authors = ["Arturs Meisters"]
   # dependencies defined in Gemfile

@@ -1,6 +1,8 @@
 require 'observer'
 
 module StateStore
+  # This class provides convertation between Array to binary number and vice versa.
+  # Each instance of class have its own set of statuses. 
   class BinaryStore
     attr_reader :statuses, :states, :total_positions
 
@@ -11,6 +13,7 @@ module StateStore
       @total_positions = 2**@states-1
     end
 
+    # Method receives value and return Array of statuses that matches current number.
     def humanize(value)
       raise ArgumentError.new("Out of range") if self.total_positions < value
       humanized_array = value_to_statuses(value)
@@ -18,22 +21,29 @@ module StateStore
       humanized_array
     end
 
+    # Method receives Array of statuses and create binary number that respresents this status for store statuses set.
+    # =====Example
+    #      store = StateStore.new([:read,:write,:execute])
+    #      store.value([:read,:execute]) # will be interpreted as 101 or 5
+    #      store.value([:write,:execute]) # will be interpreted as 011 or 3
     def value(humanized_array) 
       raise ArgumentError.new("Out of range") if self.states < humanized_array.size
       statuses_to_values(humanized_array)
     end
  
+    # It receives status and value and check if given value match given status.
+    # =====Example
+    #      store = StateStore.new([:read,:write,:execute])
+    #      store.has_status?(:read,4) # will be false because 4 is for :write only
+    #      store.has_status?(:read,5) # will be true because 5 is for :read and :execute
     def has_status?(symbol,value) 
       human_array = humanize(value)
       human_array.include?(symbol)
     end
 
+    # This method receives index and state and will retrun status with given index if state is "1"
     def index(index,state)
       statuses[index] if state.to_s == "1"
-    end
-
-    def index_by_state(state)
-      statuses[state]
     end
 
     private

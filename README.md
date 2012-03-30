@@ -8,7 +8,7 @@
 
 For Bundler add this in you Gemfile
 
-`gem state_store, '~>0.0.2'`
+`gem state_store, '~>0.0.4'`
 
 And then run
 
@@ -92,7 +92,7 @@ It is possible to alter states Array and changes storage attribute will be updat
    apple.status #=> 5
 ```
 
-But remember if you will modify `states` with other methods, like '<<' or 'delete' or others changes will not be stored in status. 
+But remember if you will modify `states` with other methods, like `<<` or `delete` or others changes will not be stored in status. 
 
 
 ## Copyright
