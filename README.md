@@ -50,7 +50,7 @@ When you need to add new states and you keep want to previous states configurati
       has_states :big,:bad, :in => :characteristic, :as => :nature
    end
 
-   wolf = Wold.new()
+   wolf = Wolf.new()
    wolf.nature = [:bad]
    wolf.characteristic #=> 1
 
