@@ -1,4 +1,5 @@
 # State store
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/kalifs/state_store)
 
 ## Installation
 
