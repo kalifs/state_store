@@ -11,7 +11,7 @@
 
 For Bundler add this in you Gemfile
 
-`gem state_store, '~>0.0.4'`
+`gem state_store, '~>0.1.0'`
 
 And then run
 
